@@ -17,7 +17,8 @@ express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', (req, res) => {
+  .get('/',(req, res)=> res.sendFile('views/index.html', {root: __dirname }))
+  .get('/excelapi', (req, res) => {
     try {
       request(options, function (error, response, body) {
         console.error('error:', error); // Print the error if one occurred

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .BUTTON_KID {
+          
+            background: #3D94F6;
+            background-image: -webkit-linear-gradient(top, #3D94F6, #1E62D0);
+            background-image: -moz-linear-gradient(top, #3D94F6, #1E62D0);
+            background-image: -ms-linear-gradient(top, #3D94F6, #1E62D0);
+            background-image: -o-linear-gradient(top, #3D94F6, #1E62D0);
+            background-image: linear-gradient(to bottom, #3D94F6, #1E62D0);
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+            color: #FFFFFF;
+            font-family: Open Sans;
+            font-size: 40px;
+            font-weight: 100;
+            padding: 40px;
+            box-shadow: 1px 1px 20px 0px #000000;
+            -webkit-box-shadow: 1px 1px 20px 0px #000000;
+            -moz-box-shadow: 1px 1px 20px 0px #000000;
+            text-shadow: 1px 1px 20px #000000;
+            border: solid #337FED 1px;
+            text-decoration: none;
+            display: block;
+            margin: 15px auto;
+            cursor: pointer;
+            text-align: center;
+        }
+        .BUTTON_KID:focus{
+            outline: none;
+        }
+        .BUTTON_KID:hover {
+            background: #1E62D0;
+            border: solid #337FED 1px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<button class="BUTTON_KID" onclick="getFile()">دریافت فایل اکسل</button>
+
+<div style="display: none;" id="loading">
+    <img style="display: block; margin: auto;" width="250" height="250"
+        src="https://miro.medium.com/max/313/1*LruTBJfGS0SDPrR9icfrMw.gif">
+</div>
+
+<body>
+
+    <script>
+        var loading = document.getElementById('loading');
+        // let baseUrl = "http://localhost:5000"
+        let baseUrl = "https://calm-beyond-65990.herokuapp.com"
+        var url = baseUrl+'/excelapi';
+        var xmlHttp = new XMLHttpRequest();
+
+        function httpGetAsync(theUrl, callback) {
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                    callback(xmlHttp.response);
+            }
+            xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+            loading.style.display = "block";
+            xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+            xmlHttp.responseType = 'blob';
+            xmlHttp.send(null);
+        }
+        function getFile() {
+            httpGetAsync(url, (res) => {
+                loading.style.display = "none";
+                setTimeout(() => {
+                    if (res.type == 'text/html') return alert('ابتدا در سایت متاویو لاگین کنید');
+                    var blob = res;
+                    let fileName = 'metaWave-' + new Date().toLocaleDateString();
+                    if (window.navigator.msSaveOrOpenBlob) {
+                        window.navigator.msSaveBlob(blob, fileName);
+                    }
+                    else {
+                        var downloadLink = window.document.createElement('a');
+                        var contentTypeHeader = xmlHttp.getResponseHeader("Content-Type");
+                        downloadLink.href = window.URL.createObjectURL(new Blob([blob], { type: contentTypeHeader }));
+                        downloadLink.download = fileName;
+                        document.body.appendChild(downloadLink);
+                        downloadLink.click();
+                        document.body.removeChild(downloadLink);
+                        alert('فایل اکسل در پوشه دانلود ایجاد شد.');
+                    }
+                }, 0);
+            })
+        }
+    </script>
+</body>
+
+</html>
