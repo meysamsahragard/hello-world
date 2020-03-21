@@ -17,29 +17,30 @@ app.listen(3000, () => {
 
 app.get("/url", (req, res, next) => {
   try {
-    request(options, function (error, response, body) {
-      console.error('error:', error); // Print the error if one occurred
-      console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-      if (!body.includes("script")) {
-        let asJson = JSON.parse(body);
-        let data = asJson.data;
-        data.forEach((element, index) => {
-          data[index].namad = /<a [^>]+>(.*?)<\/a>/g.exec(element.namad)[1];
-          data[index].paiani = data[index].paiani.replace(/<img .*?>/g, "");
-          delete data[index].groupmap;
-          delete data[index].cashflow;
+    // request(options, function (error, response, body) {
+    //   console.error('error:', error); // Print the error if one occurred
+    //   console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    //   if (!body.includes("script")) {
+    //     let asJson = JSON.parse(body);
+    //     let data = asJson.data;
+    //     data.forEach((element, index) => {
+    //       data[index].namad = /<a [^>]+>(.*?)<\/a>/g.exec(element.namad)[1];
+    //       data[index].paiani = data[index].paiani.replace(/<img .*?>/g, "");
+    //       delete data[index].groupmap;
+    //       delete data[index].cashflow;
 
-        });
-        let xls = json2xls(asJson.data);
-        fs.writeFileSync(Date.now() + 'data.xlsx', xls, 'binary');
-      res.send(body);
+    //     });
+    //     let xls = json2xls(asJson.data);
+    //     fs.writeFileSync(Date.now() + 'data.xlsx', xls, 'binary');
+    //   res.send(body);
 
-      }else{
-      res.send('isNotLogin');
-      }
+    //   }else{
+    //   res.send('isNotLogin');
+    //   }
 
 
-    });
+    // });
+    res.send('isNotLogin');
   } catch (err) {
     res.send(err);
   }
