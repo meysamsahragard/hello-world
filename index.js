@@ -1,5 +1,6 @@
 const request = require('request');
 const express = require('express')
+var cors = require('cors')
 const path = require('path')
 const PORT = process.env.PORT || 5000
 var json2xls = require('json2xls');
@@ -12,6 +13,7 @@ const options = {
   }
 };
 express()
+  .use(cors())
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
@@ -28,21 +30,25 @@ express()
             data[index].paiani = data[index].paiani.replace(/<img .*?>/g, "");
             delete data[index].groupmap;
             delete data[index].cashflow;
-  
+
           });
           let xls = json2xls(asJson.data);
-          fs.writeFileSync(Date.now() + 'data.xlsx', xls, 'binary');
-        res.send(body);
-  
-        }else{
-        res.send('iisNotLogin');
+          let fileName = Date.now() + 'data.xlsx';
+          fs.writeFileSync(fileName, xls, 'binary');
+          // res.send(body);
+          setTimeout(() => {
+            fs.unlinkSync(path.join(__dirname, fileName))
+          }, 10000);
+          res.sendFile(path.join(__dirname, fileName));
+        } else {
+          res.send('isNotLogin');
         }
-  
-  
+
+
       });
     } catch (err) {
       res.send(err);
     }
-  
+
   })
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`))
