@@ -9,9 +9,10 @@ const url = 'https://metawave.ir/makejson.php?&panel_amar_tedadhaghighi=0&panel_
 const options = {
   url: url,
   headers: {
-    Cookie: "PHPSESSID=tuoj8nc1emi64f4g82vivs2u97; _ga=GA1.2.2144405978.1584188776; ssupp.vid=XCqW4tH2V; ssupp.chatid=null; ssupp.visits=3; _gid=GA1.2.1911236001.1584639579"
+    Cookie: "PHPSESSID=idgk3hee3t48qb4ot48h0h4mk4; _ga=GA1.2.427222925.1585061840; _gid=GA1.2.1046675383.1585452096"
   }
 };
+Cookie: "PHPSESSID=tuoj8nc1emi64f4g82vivs2u97; _ga=GA1.2.2144405978.1584188776; ssupp.vid=XCqW4tH2V; ssupp.chatid=null; ssupp.visits=3; _gid=GA1.2.1911236001.1584639579"
 express()
   .use(cors())
   .use(express.static(path.join(__dirname, 'public')))
