@@ -9,7 +9,7 @@ const url = 'https://metawave.ir/makejson.php?&panel_amar_tedadhaghighi=0&panel_
 const options = {
   url: url,
   headers: {
-    Cookie: "PHPSESSID=o412qkq5q4n93stde4bocrhmh1; _ga=GA1.2.1760179483.1586878438; _gid=GA1.2.1824689452.1586878438"
+    Cookie: "PHPSESSID=8k6rmotk9en58n8med5fp361l5; _ga=GA1.2.1328222899.1586880202; _gid=GA1.2.119358716.1586880202"
   }
 };
 Cookie: "PHPSESSID=tuoj8nc1emi64f4g82vivs2u97; _ga=GA1.2.2144405978.1584188776; ssupp.vid=XCqW4tH2V; ssupp.chatid=null; ssupp.visits=3; _gid=GA1.2.1911236001.1584639579"
