@@ -1,0 +1,1 @@
+document.getElementById('item-000').getElementsByTagName('a')[0].target = '_self'

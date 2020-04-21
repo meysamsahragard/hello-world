@@ -35,8 +35,24 @@
             border-radius: 2px;
             text-decoration: none;
         }
+
+        .cookie-wrapper{
+text-align: center;
+        }
+
+        .cookie-input {
+            width: 60%;
+            margin: auto;
+            border-radius: 3px;
+            font-size: 13px;
+            padding: 10px;
+        }
     </style>
 </head>
+<div class="cookie-wrapper">
+<label >Cookie:</label>
+<input id="cookieInput" class="cookie-input">
+</div>
 <button class="BUTTON_KID" onclick="getFile()">دریافت فایل اکسل</button>
 
 <div style="display: none;" id="loading">
@@ -47,11 +63,16 @@
 <body>
 
     <script>
-        var loading = document.getElementById('loading');
+      
+        let loading = document.getElementById('loading');
+        let cookieInput = document.getElementById('cookieInput');
         // let baseUrl = "http://localhost:5000"
         let baseUrl = "https://metawave-excel.herokuapp.com"
-        var url = baseUrl + '/excelapi';
-        var xmlHttp = new XMLHttpRequest();
+        let xmlHttp = new XMLHttpRequest();
+
+        (()=>{
+            cookieInput.value = localStorage.getItem("cookie"); 
+        })()
 
         function httpGetAsync(theUrl, callback) {
             xmlHttp.onreadystatechange = function () {
@@ -65,7 +86,11 @@
             xmlHttp.send(null);
         }
         function getFile() {
-            httpGetAsync(url, (res) => {
+            let cookie = cookieInput.value;
+            localStorage.setItem('cookie', cookie);
+            let excelApiUrl = baseUrl + '/excelapi/'+cookie;
+
+            httpGetAsync(excelApiUrl, (res) => {
                 loading.style.display = "none";
                 setTimeout(() => {
                     if (res.type == 'text/html') return alert('ابتدا در سایت متاویو لاگین کنید');
